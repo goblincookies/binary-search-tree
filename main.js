@@ -1,6 +1,6 @@
 import { BST } from './bst.js'
 
-const count = 25;
+let count = 25;
 const min = 0;
 const max = 100;
 
@@ -10,12 +10,12 @@ for( let i = 0; i< digits.length; i++){
     digits[ i ] = Math.floor( Math.random() * (max - min + 1) + min);
 };
 
-digits = [1,4,3,5,6,8,9,41,55,99,23,45,67];
+// digits = [1,4,3,5,6,8,9,41,55,99,23,45,67];
 
 // let delNum = digits[ Math.floor( Math.random() * digits.length ) ];
 // let delNum = 9;
 
-digits.push( 45 );
+// digits.push( 45 );
 
 let lowest = 1000;
 let highest = 0;
@@ -28,40 +28,58 @@ console.log( 'highest:', highest );
 console.log( 'lowest:', lowest );
 console.log( digits );
 
+
+// CREATE BINARY SEARCH TREE
+// FROM ARRAY OF RANDOM NUMBERS < 100
 let bst = new BST( digits );
-// bst.print();
-console.log( bst.height( 55 ) );
+bst.print();
 
-// bst.insert( 24 );
-// bst.insert( 25 );
+// CONFIRM THE TREE IS BALANCED
+console.log( 'Is Balanced:', bst.isBalanced() );
 
-// bst.delete( delNum );
-// bst.print();
+// PRINT PRE ORDER
+console.log( 'Pre Order:', bst.preOrder() );
 
-// bst.postOrder();
+// PRINT POST ORDER
+console.log( 'Post Order', bst.postOrder() );
 
-// bst.print();
+// PRINT IN ORDER
+console.log( 'In Order', bst.inOrder() );
 
-// console.log( 'height: ', bst.height( 55 ) );
-// console.log( 'height: 1', bst.height( 1 ) );
-// console.log( 'height: 9', bst.height( 9 ) );
-// console.log( 'depth: 9', bst.depth( 9 ) );
-// console.log( 'depth: 55', bst.depth( 55 ) );
-// console.log( 'depth: 1', bst.depth( 1 ) );
+// UNBALANCING THE TREE
+count = Math.floor( 5 + Math.random() * 15 );
+digits = new Array( count ).fill( 0 );
+for( let i = 0; i< digits.length; i++){
+    digits[ i ] = Math.floor( Math.random() * (max - min + 1) + min);
+};
+digits = bst.cleanup( digits );
+console.log( `adding ${count} digits: ${digits}`);
 
-// console.log( 'balanced: ', bst.isBalanced() );
-// bst.delete( 67 );
-// bst.delete( 99 );
-// bst.delete( 55 );
-// bst.delete( 45 );
-// bst.delete( 23 );
-// bst.delete( 41 );
-bst.insert( 23 );
-bst.insert( 24 );
-bst.insert( 25 );
-
+for( let i = 0; i< digits.length; i++){
+    bst.insert( digits[ i ] );
+};
 
 bst.print();
-console.log('----');
-console.log( 'balanced: ', bst.isBalanced() );
 
+
+// CONFIRM THE TREE IS UNBALANCED
+console.log( 'Is Balanced:', bst.isBalanced() );
+
+// REBALANCE THE TREE
+bst.rebalance();
+
+// CONFIRM THE TREE IS AGAIN BALANCED
+console.log( 'Is Balanced:', bst.isBalanced() );
+
+// Confirm that the tree is balanced by calling isBalanced.
+// Print out all elements in level, pre, post, and in order.
+
+
+// PRINT PRE ORDER
+console.log( 'Pre Order:', bst.preOrder() );
+
+// PRINT POST ORDER
+console.log( 'Post Order', bst.postOrder() );
+
+// PRINT IN ORDER
+console.log( 'In Order', bst.inOrder() );

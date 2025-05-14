@@ -7,10 +7,15 @@ class BST {
 
     constructor( arr ){
 
-        arr = this.merge.cleanup( arr );
-        arr = this.merge.mergeSort( arr );
+        arr = this.cleanup( arr );
         console.log( arr );
         this.root = this.buildTree(arr);
+    };
+
+    cleanup( arr ){
+        arr = this.merge.cleanup( arr );
+        arr = this.merge.mergeSort( arr );
+        return arr;
     };
 
     print(){
@@ -30,7 +35,6 @@ class BST {
     };
 
     buildTree( arr ){
-
         // IF NULL; RET
         if ( arr.length < 1 ) { return null };
 
@@ -93,35 +97,35 @@ class BST {
     };
 
     // ROOT LEFT RIGHT
-    preOrder(){ this.preOrderRec( this.root ) };
-    preOrderRec( node ) {
-        if( node == null ) return;
-
-        console.log( node.val );
-        this.preOrderRec( node.left );
-        this.preOrderRec( node.right );
+    preOrder(){ return this.preOrderRec( this.root, [] ) };
+    preOrderRec( node, arr ) {
+        if( node == null ) return arr;
+        arr.push( node.val );
+        this.preOrderRec( node.left, arr );
+        this.preOrderRec( node.right, arr );
+        return arr;
     };
 
     // LEFT ROOT RIGHT
-    inOrder( node ) { this.inOrderRec( this.root ) }
-    inOrderRec( node ) {
-        if( node == null ) return;
+    inOrder( ) { return this.inOrderRec( this.root, [] ) }
+    inOrderRec( node, arr ) {
+        if( node == null ) return arr;
 
-        this.inOrderRec( node.left );
-        console.log( node.val );
-        this.inOrderRec( node.right );
+        this.inOrderRec( node.left, arr );
+        arr.push( node.val );
+        this.inOrderRec( node.right, arr );
+        return arr;
     };
 
     // LEFT RIGHT ROOT
-    postOrder( node ) {
-        this.postOrderRec( this.root );
-    }
-    postOrderRec( node ) {
+    postOrder( ) { return this.postOrderRec( this.root, [] ); }
+    postOrderRec( node, arr ) {
         if( node == null ) return;
 
-        this.postOrderRec( node.left );
-        this.postOrderRec( node.right );
-        console.log( node.val );
+        this.postOrderRec( node.left, arr );
+        this.postOrderRec( node.right, arr );
+        arr.push( node.val );
+        return arr;
     };
     
     delete( val ) {
@@ -224,10 +228,10 @@ class BST {
         else { return d };
     };
 
+    // CHECKS IF TREE IS BALANCED
     isBalanced() {
         return this.isBalancedRec( this.root, 0 );
     };
-
     isBalancedRec( node, d ) {
         if( !node ) { return true };
 
@@ -240,6 +244,11 @@ class BST {
         let rBalanced = this.isBalancedRec( node.right, 0 );
 
         return( lBalanced && rBalanced );
+    };
+
+    rebalance(){
+        let arr = this.inOrder();
+        this.root = this.buildTree( arr );
     };
 
 };
