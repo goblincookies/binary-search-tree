@@ -29,7 +29,7 @@ console.log( 'lowest:', lowest );
 console.log( digits );
 
 let bst = new BST( digits );
-bst.print();
+// bst.print();
 console.log( bst.height( 55 ) );
 
 // bst.insert( 24 );
@@ -42,7 +42,26 @@ console.log( bst.height( 55 ) );
 
 // bst.print();
 
-console.log( 'height: ', bst.height( 55 ) );
-console.log( 'height: ', bst.height( 1 ) );
-console.log( 'height: ', bst.height( 9 ) );
+// console.log( 'height: ', bst.height( 55 ) );
+// console.log( 'height: 1', bst.height( 1 ) );
+// console.log( 'height: 9', bst.height( 9 ) );
+// console.log( 'depth: 9', bst.depth( 9 ) );
+// console.log( 'depth: 55', bst.depth( 55 ) );
+// console.log( 'depth: 1', bst.depth( 1 ) );
+
+// console.log( 'balanced: ', bst.isBalanced() );
+// bst.delete( 67 );
+// bst.delete( 99 );
+// bst.delete( 55 );
+// bst.delete( 45 );
+// bst.delete( 23 );
+// bst.delete( 41 );
+bst.insert( 23 );
+bst.insert( 24 );
+bst.insert( 25 );
+
+
+bst.print();
+console.log('----');
+console.log( 'balanced: ', bst.isBalanced() );
 

@@ -88,10 +88,8 @@ class BST {
 
         if( val < node.val ) { return this.findRec( node.left, val ) }
         else if ( val > node.val ) { return this.findRec( node.right, val ) }
-        else {
-            // FOUND 
-            return node;
-        };
+        // FOUND 
+        else { return node };
     };
 
     // ROOT LEFT RIGHT
@@ -127,7 +125,7 @@ class BST {
     };
     
     delete( val ) {
-        console.log( 'deleting' );
+        console.log( 'deleting', val );
         this.deleteRec( null, this.root, val );
     };
 
@@ -143,19 +141,12 @@ class BST {
             return this.deleteRec( node, node.left, val ); }
         else if ( val > node.val ) {
             // console.log( 'right' );
-            
             return this.deleteRec( node, node.right, val ); }
         else {
             // FOUND IT
-
-            console.log( 'found it!', node.val );
-
             // HAS ZERO CHILDREN:
             if ( !node.left && !node.right ) {
                 //      -- DELETE
-                console.log( 'no children' );
-                console.log( node );
-
                 this.linkParentToChild( prev, node.val, null );
                 node = null;
                 return node;
@@ -166,10 +157,7 @@ class BST {
             //      -- STEAL ITS VALUE
             //      -- DELETE STOLEN NODE
             if ( node.left && node.right ) {                
-                console.log( 'both' );
-                console.log( node );
                 let minVal = this.minVal( node.right )
-                console.log( minVal );
                 node.val = minVal;
                 this.deleteRec( node, node.right, node.val );
                 return node;
@@ -178,37 +166,27 @@ class BST {
             // HAS ONE CHILD
             if ( node.left ) {
                 //      -- LINK PARENT TO NEXT
-                console.log( 'one child, left' );
-                console.log( node );
                 this.linkParentToChild( prev, node.val, node.left );
                 return node;
             } else {
-                console.log( 'one child, right' );
-                console.log( node );
                 this.linkParentToChild( prev, node.val, node.right );
-                console.log( node );
                 return node;
             };  
         };
     };
 
     linkParentToChild( parent, val, child ) {
-        console.log( 'linking' )
-        console.log( parent, val, child );
-
         if ( parent.left ) {
-            console.log( 'checking left')
             if( parent.left.val == val ){ parent.left = child; }
         }
         
         if ( parent.right ){
-            console.log( 'checking right')
             if( parent.right.val == val ){ parent.right = child; }
         };
     };
 
     minVal( node ) {
-        console.log( 'finding minumum', node.val )
+
         if( node.left ) {
             return this.minVal( node.left );
         };
@@ -230,6 +208,38 @@ class BST {
             this.heightRec( node.left, h + 1 ),
             this.heightRec( node.right, h + 1 )
         );
+    };
+
+    // THE PATH FROM ROOT TO NODE
+    depth( val ) {
+        return this.depthRec( this.root, val, 0 );
+    };
+
+    depthRec( node, val, d ) {
+        if ( !node ) { return d - 1 };
+
+        if( val < node.val ) { return this.depthRec( node.left, val, d + 1 ) }
+        else if ( val > node.val ) { return this.depthRec( node.right, val, d + 1 ) }
+        // FOUND 
+        else { return d };
+    };
+
+    isBalanced() {
+        return this.isBalancedRec( this.root, 0 );
+    };
+
+    isBalancedRec( node, d ) {
+        if( !node ) { return true };
+
+        let lHalf = this.heightRec( node.left, d + 1 );
+        let rHalf = this.heightRec( node.right, d + 1 );
+
+        if ( Math.abs( lHalf - rHalf ) > 1 ) { return false; }
+
+        let lBalanced = this.isBalancedRec( node.left, 0 );
+        let rBalanced = this.isBalancedRec( node.right, 0 );
+
+        return( lBalanced && rBalanced );
     };
 
 };
