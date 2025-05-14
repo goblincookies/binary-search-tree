@@ -84,38 +84,14 @@ class BST {
 
     find( val ) { return this.findRec( this.root, val ) };
     findRec( node, val ) {
-        if ( node.val == val ) {
-            console.log( 'found val:', val );
-            console.log( node );
+        if ( !node ) { return null };
+
+        if( val < node.val ) { return this.findRec( node.left, val ) }
+        else if ( val > node.val ) { return this.findRec( node.right, val ) }
+        else {
+            // FOUND 
             return node;
         };
-
-        if( val < node.val ) {
-            if ( node.left ) {
-                return this.findRec( node.left, val );
-            } else {
-                // NOT FOUND
-                return null;
-            };
-        } else {
-            if ( node.right ) {
-                return this.findRec( node.right, val );
-            } else {
-                // NOT FOUND
-                return null;
-            };
-        };
-    };
-
-    nextSmallest( node ) {
-        if( !node ) { return null }
-        if ( node.left ) {
-            if ( node.left.left ) {
-                return this.nextSmallest( node.left );
-            }
-            return node;
-        };
-
     };
 
     // ROOT LEFT RIGHT
@@ -240,6 +216,22 @@ class BST {
         return node.val;
     };
     
+    // THE LONGEST PATH FROM NODE TO LEAF
+    height( val ) {
+        let found = this.find( val );
+        if( !found ) { return 0 };
+
+        return this.heightRec( found, 0 )
+    };
+
+    heightRec( node, h ) {
+        if( !node ) { return h - 1 };
+        return Math.max(
+            this.heightRec( node.left, h + 1 ),
+            this.heightRec( node.right, h + 1 )
+        );
+    };
+
 };
 
 class Node {

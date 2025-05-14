@@ -10,9 +10,9 @@ for( let i = 0; i< digits.length; i++){
     digits[ i ] = Math.floor( Math.random() * (max - min + 1) + min);
 };
 
-// digits = [1,4,3,5,6,8,9,41,55,99,23,45,67];
+digits = [1,4,3,5,6,8,9,41,55,99,23,45,67];
 
-let delNum = digits[ Math.floor( Math.random() * digits.length ) ];
+// let delNum = digits[ Math.floor( Math.random() * digits.length ) ];
 // let delNum = 9;
 
 digits.push( 45 );
@@ -29,16 +29,20 @@ console.log( 'lowest:', lowest );
 console.log( digits );
 
 let bst = new BST( digits );
+bst.print();
+console.log( bst.height( 55 ) );
 
 // bst.insert( 24 );
 // bst.insert( 25 );
-bst.print();
 
-bst.delete( delNum );
-bst.print();
+// bst.delete( delNum );
+// bst.print();
 
 // bst.postOrder();
 
 // bst.print();
 
-// console.log( bst.find( 25 ).val );
+console.log( 'height: ', bst.height( 55 ) );
+console.log( 'height: ', bst.height( 1 ) );
+console.log( 'height: ', bst.height( 9 ) );
+
